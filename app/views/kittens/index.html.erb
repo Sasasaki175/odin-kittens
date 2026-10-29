@@ -1,5 +1,12 @@
 <h1>Index</h1>
-<% @kittens.each do |kitten| %>
-  <%= kitten.name %><br>
-  <%= link_to "See kitten details", kitten %>
-<% end %>
+<div>
+  <% @kittens.each do |kitten| %>
+    <%= link_to "Details", kitten %>
+    <%= kitten.name %>
+    <br>
+  <% end %>
+</div>
+
+<p>
+  <%= link_to "Register new kitten", new_kitten_path %>
+</p>

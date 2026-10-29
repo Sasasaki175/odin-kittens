@@ -1,7 +1,10 @@
-<p>
+<div>
   Name: <%= kitten.name %><br>
   Age: <%= kitten.age %><br>
   Cuteness: <%= kitten.cuteness %><br>
   Softness: <%= kitten.softness %><br>
+</div>
+
+<p>
+  <%= link_to "Edit details", edit_kitten_path %>
 </p>
-<%= link_to "Edit details", edit_kitten_path %>
