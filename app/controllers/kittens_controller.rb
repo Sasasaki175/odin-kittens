@@ -9,15 +9,36 @@ class KittensController < ApplicationController
   end
 
   def new
+    @kitten = Kitten.new
   end
 
   def edit
   end
 
   def create
+    @kitten = Kitten.new(kitten_params)
+
+    respond_to do |format|
+      if @kitten.save
+        format.html { redirect_to @kitten, notice: "Kitten was successfully registered." }
+        format.json { render :show, status: :created, location: @kitten }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @kitten.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
+    respond_to do |format|
+      if @kitten.update(kitten_params)
+        format.html { redirect_to @kitten, notice: "Details about the kitten has been updated successfully." }
+        format.json { render :show, status: :ok, location: @kitten }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @kitten.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
@@ -27,5 +48,9 @@ class KittensController < ApplicationController
 
   def set_post
     @kitten = Kitten.find(params[:id])
+  end
+
+  def kitten_params
+    params.expect(kitten: [ :name, :age, :cuteness, :softness ])
   end
 end
