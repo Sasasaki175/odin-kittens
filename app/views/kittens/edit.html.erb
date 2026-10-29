@@ -7,3 +7,11 @@ Edit kitten
 <div>
   <%= render "form", kitten: @kitten %>
 </div>
+
+<p>
+  <%= button_to "Destroy this kittens data", @kitten, method: :delete %>
+</p>
+
+<p>
+  <%= link_to "Top", kittens_path %>
+</p>
