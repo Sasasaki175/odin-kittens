@@ -3,9 +3,16 @@ class KittensController < ApplicationController
 
   def index
     @kittens = Kitten.all
+
+    respond_to do |format|
+      format.json { render json: @kittens }
+    end
   end
 
   def show
+    respond_to do |format|
+      format.json { render json: @kitten }
+    end
   end
 
   def new
@@ -43,7 +50,7 @@ class KittensController < ApplicationController
           flash.now[:alert] = mocking_message(@kitten)
           render :edit, status: :unprocessable_entity
         end
-        
+
         format.json { render json: @kitten.errors, status: :unprocessable_entity }
       end
     end
