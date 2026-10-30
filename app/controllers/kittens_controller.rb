@@ -23,7 +23,11 @@ class KittensController < ApplicationController
         format.html { redirect_to @kitten, notice: "Kitten was successfully registered." }
         format.json { render :show, status: :created, location: @kitten }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html do
+          flash.now[:alert] = mocking_message(@kitten)
+          render :new, status: :unprocessable_entity
+        end
+
         format.json { render json: @kitten.errors, status: :unprocessable_entity }
       end
     end
@@ -35,7 +39,11 @@ class KittensController < ApplicationController
         format.html { redirect_to @kitten, notice: "Details about the kitten has been updated successfully." }
         format.json { render :show, status: :ok, location: @kitten }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html do
+          flash.now[:alert] = mocking_message(@kitten)
+          render :edit, status: :unprocessable_entity
+        end
+        
         format.json { render json: @kitten.errors, status: :unprocessable_entity }
       end
     end
@@ -58,5 +66,10 @@ class KittensController < ApplicationController
 
   def kitten_params
     params.expect(kitten: [ :name, :age, :cuteness, :softness ])
+  end
+
+  def mocking_message(kitten)
+    problems = kitten.errors.full_messages.to_sentence
+    "You have problems in your form and you have failed the easy task of filling it... The problem: #{ problems}."
   end
 end
